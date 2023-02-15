@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
+    <script src="DATA/World_SHP/world.geojson" type="text/javascript"></script>
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
@@ -56,6 +56,31 @@
                 }
             );
 
+
+            // ---- GEOJSON WORLD ----
+            var myStyle = {
+                "color": "#ff7800",
+                "weight": 2,
+                "opacity": 0.65
+            };
+
+            let dataLayer = L.layerGroup()
+            function onDataFeature(feature, layer ) {
+                layer.bindPopup(feature.properties.NAME)
+                // layer.on({
+                //     click: zoomToFeature
+                // });
+                dataLayer.addLayer(layer)
+            }
+
+            var myLayer = L.geoJSON(
+                world,
+                {
+                    style: myStyle,
+                    onEachFeature: onDataFeature
+                }
+                ).addTo( map_d971c6368bb1b744dc40b80c5d30f61c );
+            //myLayer.addData(world);
             
 
         
