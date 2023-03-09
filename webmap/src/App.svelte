@@ -2,6 +2,11 @@
 	import {onMount} from 'svelte';
 	import LeafletMap from './Map.svelte';
 	import GeoJson from './Geojson.svelte';
+	import LeftPanel from './LeftPanel.svelte';
+
+	// import map object from store
+	import {count} from './store.js';
+
 
 	// Empty Container for the json datasets (3 of them) to be used.
 	let data = {
@@ -9,6 +14,9 @@
 		radical:[],
 		deradical:[],
 	}
+
+	let active_country;
+	// console.log( active_country );
 
 	onMount(async () => {
 		// Import Data from 3 Resources
@@ -37,8 +45,17 @@
 		// Get clicked polygons unique ID
 		let active = e.detail.active;
 		let obj_id = active._path.id
+		active_country = obj_id;
 
-		console.log( obj_id );
+		if (active_country){
+			// hide all other polygons except active
+			let all_polygons = document.querySelectorAll('.leaflet-interactive');
+			all_polygons.forEach(function(poly){
+				if (poly.id !== obj_id){
+					poly.style.display = 'none';
+				}
+			})
+		}
 
 		// Radical Data, Filtered by Clicked Country
 		let active_radical = data.radical.filter(function(feature){
@@ -57,6 +74,22 @@
 		console.log( active_deradical );
 	}
 
+	function resetView(){
+		// show all polygons
+		let all_polygons = document.querySelectorAll('.leaflet-interactive');
+		all_polygons.forEach(function(poly){
+			poly.style.display = 'block';
+		})
+
+		//countValue is map object stored in the store.js
+		let map;
+		count.subscribe(value => {
+			map = value;
+			});
+
+		map.setView([49,14.2], 3);
+
+	}
 	
 </script>
 
@@ -71,7 +104,11 @@
 		<div class="header">This is header content</div>
 		<div class="content">
 			<div class="panels-container">
-				<div class='panel' id="left-panel">left</div>
+				<div class='panel' id="left-panel">
+					<LeftPanel {active_country}/>
+					<!-- Separate this in to a component -->
+					
+				</div>
 				<div class='panel' id="right-panel">
 					<LeafletMap>
 						<GeoJson on:message={handleMessage} geojson={data.world} />
