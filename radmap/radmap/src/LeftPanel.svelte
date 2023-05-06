@@ -3,8 +3,10 @@
     import {app_state, country, region, source, active_event} from './store.js';
     import Switch from './Switch.svelte';
 
-    export let data;
-
+    export let data_all;
+    
+    let data = data_all.main;
+    let info = data_all.country_info;
 
     // STORE DATA
     let this_country;
@@ -50,8 +52,10 @@
 
     // Fiter data to country and source
     let filtered_data;
+    let filtered_info;
     $: if(this_country && this_source){
         filtered_data = data.filter(d => d.source == this_source && d.NAME == this_country);
+        filtered_info = info.find(d => d.Country == this_country);
     }
 
     // If a specific event is cliked make it active
@@ -82,8 +86,9 @@
             {#if state == 'country'}
                 <p class="back-button" on:click={goBack}>Back to World</p>
                 {#if filtered_data}
-                    <!-- <p><b>{this_country}</b></p> -->
-                    <p> There are {filtered_data.length} {this_source}ization events</p>
+                    <p class="country-title">{this_country}</p>
+                    <p class="country-info"> There are {filtered_data.length} {this_source}ization events</p>
+                    <p class="country-info"> {filtered_info['Info']}</p>
                 {/if}
             {/if}
 
@@ -94,18 +99,22 @@
                     <span class="back-button" on:click={gotoCountry}>{this_country}</span>
                 </div>
 
-                <h3 class="info-content">Region: {this_region}</h3>
+                <h3 class="info-content">{this_region}</h3>
+                <!-- <p class="country-info"> There are {filtered_data.length} {this_source}ization events</p> -->
+
                 {#if active_id != ''}
                     <!-- COMMON COLUMNS -->
-                    <p><b>Event Type: </b>{active_event_data['Event Type']}</p>
-                    <p><b>Event Description: </b><br>{active_event_data['Event Description']}</p>
-                    <p><b>Location: </b><br>{active_event_data['Location']}</p>
-                    <p><b>Address: </b><br>{active_event_data['Address']}</p>
+                    <p><span class='event-title'>Event Type: </span><span class="event-info">{active_event_data['Event Type']}</span></p>
+                    <p><span class='event-title'>Event Description:</span><br><span class="event-info">{active_event_data['Event Description']}</span></p>
+                    <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data['Location']}</span></p>
+                    <!-- <p><b>Address: </b><br>{active_event_data['Address']}</p> -->
                     <!-- Additional Columns fro DERAD-->
+                    <!-- “Name of deradicalization program”, “approach”, “targets”, “scale”, “agents”, “date” -->
                     {#if this_source === 'deradical'}
-                        {#each de_rad_columns as column}
+                        <!-- {#each de_rad_columns as column} -->
+                        {#each ['Program Name','Approach','Targets','Scale','Agents','Date'] as column}
                             {#if active_event_data[column]}
-                                <p><b>{column}:</b> {active_event_data[column]}</p>
+                                <p> <span class='event-title'>{column}</span>: <span class="event-info">{active_event_data[column]}</span></p>
                             {/if}
                         {/each}
                         {#if active_event_data['Links']}

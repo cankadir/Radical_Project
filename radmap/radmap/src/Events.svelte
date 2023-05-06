@@ -44,7 +44,7 @@
         let region_markers =  []
         filtered_data.forEach(function(d){
 
-            let popup =  `<b>${this_region}</b><br><p>${d['Event Type']}</p>`
+            let popup =  `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
             let circle = L.circle([d.lat, d.lon], {
                 // Remove border
                 color: '#333',

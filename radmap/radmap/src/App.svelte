@@ -20,7 +20,8 @@
 	// DATA
 	let data = {
 			world:[],
-			main:[]
+			main:[],
+			country_info: [],
 		}
 
 	onMount(async () => {
@@ -34,30 +35,34 @@
 			const main_data = await fetch('data/data.json')
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
-		})
 
+			const country_info = await fetch('data/DRad_County.json')
+			const json_country_info = await country_info.json()
+			data.country_info = json_country_info;
+
+		})
 
 </script>
 
 <svelte:head>
 	<link rel="stylesheet" href="assets/leaflet/leaflet.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main>
 
-  {#if (data.main.length > 0) && (data.world.length > 0) }
+  {#if (data.main.length > 0) && (data.world.length > 0) && (data.country_info.length > 0)}
 
 			<!-- LEFT PANEL -->
-			<LeftPanel data={data.main} />
-
+			<LeftPanel data_all={data} />
+			
 
 			<!-- RIGHT PANEL MAP -->
 			<Map>
 				<Countries polygon={data.world} />
-				<Regions points = {data.main} />
+				<Regions data = {data}/>
 				<Events points = {data.main} />
 			</Map>
 

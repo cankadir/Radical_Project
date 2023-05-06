@@ -5,7 +5,10 @@
     import {groupBy, mean, map} from 'lodash';
     import L from 'leaflet';
 
-    export let points;
+    export let data;
+    
+    let points = data.main;
+    // let info = data.country_info;
 
     let map_object = $LMap;
 
@@ -121,6 +124,12 @@
 		document.querySelectorAll('.region-annot').forEach(function(event){
 			event.style.display = 'none';
 		})
+
+        document.querySelectorAll('.country').forEach(function(event){
+			event.style.display = 'none';
+		})
+
+        
     }else{
         document.querySelectorAll('.region').forEach(function(region){
             region.style.display = 'block';
@@ -131,6 +140,17 @@
         document.querySelectorAll('.region-annot').forEach(function(event){
             event.style.display = 'block';
         })
+
+        document.querySelectorAll('.country').forEach(function(event){
+			event.style.display = 'block';
+		})
+    }
+
+    $: if( (state === 'world') ){
+        console.log('this is the world');
+        document.querySelectorAll('.country').forEach(function(event){
+			event.style.display = 'block';
+		})
     }
 
 </script>

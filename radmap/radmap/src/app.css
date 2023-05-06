@@ -100,3 +100,50 @@ main{
   height: 25px! important;
   line-height: 25px! important;
 }
+
+.country-title{
+  font-size: 14pt;
+  font-weight: 600;
+}
+
+.country-info{
+  font-size: 11pt !important;
+  font-weight: 400;
+  color:rgba(255, 255, 255, 0.6)! important;
+
+}
+
+.event-title{
+  font-size: 11pt;
+  font-weight: 600;
+}
+
+.event-info{
+  font-size: 11pt !important;
+  font-weight: 400;
+  color:rgba(255, 255, 255, 0.6)! important;
+
+}
+
+.popup-container{
+
+  min-width: 200px;
+  max-width: 250px;
+  padding: 5px;
+  /* Word wrap */
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  /* Firefox */
+  overflow-wrap: break-word;
+  /* IE */
+  -ms-word-break: break-all;
+  /* IE 7 */
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+
+}

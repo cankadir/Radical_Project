@@ -18,7 +18,7 @@
 
 <!-- Label -->
 <div class="label">
-    <label class="switch-label">Deradicalization {on_off}</label>
+    <label class="switch-label">See Deradicalization Initiatives</label>
 </div>
 <!-- Rounded switch -->
 <label class="switch" on:change={swith_source}>
