@@ -89,7 +89,7 @@
             let divIcon = L.divIcon({
                             className: `region ${source} ${country}`,
                             id: key,
-                            html: `<div class="region-circle" style="width:${num_events_norm}px;height:${num_events_norm}px"><div class="region-annot">${num_events}</div></div>`
+                            html: `<div class="region-circle" style="width:${num_events_norm}px;height:${num_events_norm}px"><div class="region-annot"><div id="symbology" style="line-height:${num_events_norm}px">${num_events}</div></div></div>`
                         });
                 // --- REGION MARKER ---
                 let marker = L.marker([lat, lon], {icon: divIcon})

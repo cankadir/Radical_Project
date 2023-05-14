@@ -7,6 +7,11 @@
     const map_object = $LMap;
     export let polygon;
 
+    let southwest = [25.0,-20.0];
+    let northeast = [75.0,45.0 ];
+    let bounds =  [southwest, northeast] //L.latLngBounds( lower_left, upper_right );
+    // let bound_props = { padding: [1,1] , maxZoom: 4}
+
     // APP STATE
     let state;
     app_state.subscribe(value => {
@@ -14,10 +19,10 @@
     });
 
     $ : if(state === 'world' ){
-        map_object.flyToBounds(
-            layer.getBounds(),
-            { padding: [2,2] , maxZoom: 4}
-        )
+        console.log( "I am here" )
+        map_object.setView([52,0], 3.25);
+        console.log( map_object.getZoom() )
+
         country.set('');
         region.set('');
     };
@@ -80,10 +85,5 @@
         polygon._path.classList.add("country")
     });
 
-    // Zoom to Layer at initiation
-    map_object.fitBounds(
-        layer.getBounds(),
-        { padding: [2,2] , maxZoom: 4}
-    );
     
 </script>

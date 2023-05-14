@@ -51,7 +51,7 @@
                 weight: 2,
                 fillColor: '#009Bf5',
                 fillOpacity: 1,
-                radius: 500
+                radius: 250
             }).addTo(map)
             .bindTooltip(popup)
             .on('click', function(e){

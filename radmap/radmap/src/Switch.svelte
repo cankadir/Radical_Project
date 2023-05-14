@@ -7,10 +7,13 @@
         if(e.target.checked === true){
             source.set( 'deradical' );
             on_off = 'on'
+            document.getElementById('rad-switch').style.backgroundColor = '#1D4ED8';
         }
         else{
             source.set( 'radical' );
             on_off = 'off'
+            document.getElementById('rad-switch').style.backgroundColor = '#f0227C';
+
         }
     }
 
@@ -23,10 +26,18 @@
 <!-- Rounded switch -->
 <label class="switch" on:change={swith_source}>
     <input type="checkbox">
-    <span class="slider round"></span>
+    <span class="slider round" id="rad-switch"></span>
 </label>
 
 <style>
+
+    .switch-label{
+        padding-right: 10px;
+        font-size: 11pt !important;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+
     .switch {
     position: relative;
     display: inline-block;
@@ -46,28 +57,28 @@
 
     /* The slider */
     .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #333;
-    -webkit-transition: .4s;
-    transition: .4s;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f0227C;
+        -webkit-transition: .4s;
+        transition: .4s;
     }
 
     .slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 1px;
-    background-color: #858585;
-    border: 1px solid #f7f7f7;
-    -webkit-transition: .4s;
-    transition: .4s;
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 1px;
+        background-color: #f7f7f7;
+        border: 1px solid #f7f7f7;
+        -webkit-transition: .4s;
+        transition: .4s;
     }
 
     input:checked + .slider:before {

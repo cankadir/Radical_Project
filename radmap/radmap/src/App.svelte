@@ -27,7 +27,7 @@
 	onMount(async () => {
 			// Import Data from 3 Resources
 			// 1. World Administrative Boundaries
-			const response = await fetch('data/world-administrative-boundaries_RAD_4236.geojson')
+			const response = await fetch('data/DeRad_Boundaries.geojson')
 			const json = await response.json()
 			data.world = json.features;
 
@@ -58,7 +58,6 @@
 			<!-- LEFT PANEL -->
 			<LeftPanel data_all={data} />
 			
-
 			<!-- RIGHT PANEL MAP -->
 			<Map>
 				<Countries polygon={data.world} />
