@@ -120,6 +120,10 @@ main{
   line-height: 25px! important;
 }
 
+.leaflet-tooltip-pane{
+  z-index: 1000 !important;
+}
+
 .country-count{
   cursor: pointer;
 }
@@ -127,6 +131,22 @@ main{
 .country-title{
   font-size: 14pt;
   font-weight: 600;
+}
+
+.country-name{
+  font-size: 11pt;
+  font-weight: 400;
+  color:rgba(255, 255, 255, 0.5)! important;
+}
+
+.country-name:hover{
+  color: white !important;
+}
+
+.country-count{
+  font-size: 11pt;
+  font-weight: 600;
+  color:rgba(255, 255, 255, 0.5)! important;
 }
 
 .country-info{
@@ -144,9 +164,25 @@ main{
 .event-info{
   font-size: 11pt !important;
   font-weight: 400;
-  color:rgba(255, 255, 255, 0.6)! important;
-
+  color:rgba(255, 255, 255, 0.5)! important;
 }
+
+.event-icon{
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  /* center vertically */
+  position: absolute;
+}
+
+.event-icon.radical{
+  background: #f0227C;
+}
+
+.event-icon.deradical{
+  background: #6366F1;
+}
+
 
 .popup-container{
 

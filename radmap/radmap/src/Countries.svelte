@@ -7,9 +7,9 @@
     const map_object = $LMap;
     export let polygon;
 
-    let southwest = [25.0,-20.0];
-    let northeast = [75.0,45.0 ];
-    let bounds =  [southwest, northeast] //L.latLngBounds( lower_left, upper_right );
+    // let southwest = [25.0,-20.0];
+    // let northeast = [75.0,45.0 ];
+    // let bounds =  [southwest, northeast] //L.latLngBounds( lower_left, upper_right );
     // let bound_props = { padding: [1,1] , maxZoom: 4}
 
     // APP STATE

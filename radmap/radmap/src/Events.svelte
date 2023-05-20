@@ -4,6 +4,9 @@
     export let points;
     import L from 'leaflet';
 
+    let blue = '#1D4ED8';
+    let pink = '#f0227C';
+
     // DATA FROM STORE
     let this_region;
     region.subscribe(value => {
@@ -39,30 +42,49 @@
     $: if( this_region != ''){
         reset_event_Markers();
         filtered_data = points.filter(d => d.Region == this_region && d.source == this_source);
-
+        console.log(this_source);
         // Circle markers and zoom to bounds
         let region_markers =  []
         filtered_data.forEach(function(d){
 
             let popup =  `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
-            let circle = L.circle([d.lat, d.lon], {
-                // Remove border
-                color: '#333',
-                weight: 2,
-                fillColor: '#009Bf5',
-                fillOpacity: 1,
-                radius: 250
+            
+            // let circle = L.circle([d.lat, d.lon], {
+            //     // Remove border
+            //     color: '#333',
+            //     weight: 2,
+            //     fillColor: this_source == 'radical' ? pink : blue,
+            //     fillOpacity: 1,
+            //     radius: 300
+            // }).addTo(map)
+
+            // circle.bindTooltip(popup)
+            // .on('click', function(e){
+            //     active_event.set(d['uid']);
+            // })
+
+            let circle = L.marker([d.lat, d.lon], {
+                icon: L.divIcon({
+                    className: ['event-icon', 'event', this_source].join(' '),
+                    iconSize: [15,15]
+                })
             }).addTo(map)
-            .bindTooltip(popup)
+
+            circle.bindTooltip(popup)
             .on('click', function(e){
                 active_event.set(d['uid']);
             })
 
+            // console.log(d['uid']);
+            console.log(circle._icon);
+            circle._icon.id = d['uid'];
+
+
             // assign class to circle
-            circle._path.classList.add('event');
-            circle._path.classList.add(this_source);
-            // Add id
-            circle._path.id = d['uid'];
+            // circle._path.classList.add('event');
+            // circle._path.classList.add(this_source);
+            // // // Add id
+            // circle._path.id = d['uid'];
             region_markers.push(circle);
         })
         map.flyToBounds( L.featureGroup(region_markers).getBounds(), {padding: [120,120], maxZoom:11} );

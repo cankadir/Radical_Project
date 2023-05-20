@@ -7,7 +7,7 @@
         if(e.target.checked === true){
             source.set( 'deradical' );
             on_off = 'on'
-            document.getElementById('rad-switch').style.backgroundColor = '#1D4ED8';
+            document.getElementById('rad-switch').style.backgroundColor = '#6366F1';
         }
         else{
             source.set( 'radical' );
@@ -44,7 +44,7 @@
     width: 47px;
     height: 20px;
     border: 1px solid #f7f7f7;
-    border-radius: 34px;
+    border-radius: 10px;
     }
 
     /* Hide default HTML checkbox */
@@ -52,7 +52,6 @@
     opacity: 0;
     width: 0;
     height: 0;
-
     }
 
     /* The slider */
@@ -71,12 +70,12 @@
     .slider:before {
         position: absolute;
         content: "";
-        height: 16px;
-        width: 16px;
-        left: 2px;
-        bottom: 1px;
+        height: 20px;
+        width: 20px;
+        left: 0px;
+        bottom: 0px;
         background-color: #f7f7f7;
-        border: 1px solid #f7f7f7;
+        /* border: 1px solid #f7f7f7; */
         -webkit-transition: .4s;
         transition: .4s;
     }

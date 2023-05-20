@@ -39,11 +39,14 @@
     // BACK FUNCTIONS
     function goBack(){
         app_state.set('world');
+        region.set('');
+        active_event.set('');
         document.getElementById('left-panel').style.minWidth = '60px';
     }
 
     function gotoCountry(){
         region.set('');
+        active_event.set('');
         app_state.set('country');
     }
 
@@ -62,6 +65,13 @@
     $: if(this_country && this_source){
         filtered_data = data.filter(d => d.source == this_source && d.NAME == this_country);
         filtered_info = info.find(d => d.Country == this_country);
+    }
+
+    let region_data;
+    $: if(this_region && this_source){
+        region_data = data.filter(d => d.source == this_source && d.Region == this_region);
+        region_data = region_data[0]
+        console.log(region_data);
     }
 
     // If a specific event is cliked make it active
@@ -95,8 +105,8 @@
 
             {#each Object.entries(country_counts) as [key, value]}
                 <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}}>
-                    <span class="country-name event-info">{key}</span>
-                    <span class="country-count event-info">{value}</span>
+                    <span class="country-name">{key}</span>
+                    <span class="country-count">{value}</span>
                 </div>
             {/each}
 
@@ -137,15 +147,12 @@
                             <a target="_blank" href={active_event_data['Links']}>Event Link</a>
                         {/if}
                     {/if}
+                
+                {:else}
+                    <p><span class="event-info">{region_data['Region Info']}</span></p>
                 {/if}
             {/if}
         {/if}
-
-        <!-- {#if state !== 'world'}
-            <div id="switch-holder">
-                <Switch/>
-            </div>
-        {/if} -->
 
     </div>
 
