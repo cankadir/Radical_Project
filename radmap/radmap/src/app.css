@@ -124,6 +124,12 @@ main{
   z-index: 1000 !important;
 }
 
+.leaflet-tile {
+  width: 258px !important; 
+  height: 258px !important;
+}
+
+
 .country-count{
   cursor: pointer;
 }
@@ -183,7 +189,6 @@ main{
   background: #6366F1;
 }
 
-
 .popup-container{
 
   min-width: 200px;
@@ -206,3 +211,4 @@ main{
 
 
 }
+

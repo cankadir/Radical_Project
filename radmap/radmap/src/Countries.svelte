@@ -60,8 +60,8 @@
     function onEachFeature(feature, layer) {
         //Only bind popup if Owner Column is not empty
         if( feature.properties.name ){
-            let popup = `<b>${feature.properties.name}</b>`;
-            layer.bindTooltip(popup,{permanent: false, sticky:true, direction: 'center', className: 'tooltip'});
+            // let popup = `<b>${feature.properties.name}</b>`;
+            // layer.bindTooltip(popup,{permanent: false, sticky:true, direction: 'center', className: 'tooltip'});
             layer.on({ click:activePolygon }) 
         }
     };
