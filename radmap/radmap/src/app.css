@@ -93,12 +93,20 @@ main{
 
 .region-circle {
   background: black;
-  border: 3px solid #009BF5;
+  /* border: 3px solid #009BF5; */
   border-radius: 50%;
   color: white;
   font-size: 9px;
   font-weight: 500;
   font-family: "Noto Sans", sans-serif;
+}
+
+.region-deradical{
+  border: 3px solid #F0227C;
+}
+
+.region-radical{
+  border: 3px solid #F0227C;
 }
 
 .region-circle .region-annot{
@@ -186,7 +194,7 @@ main{
 }
 
 .event-icon.deradical{
-  background: #6366F1;
+  background: #f0227C;
 }
 
 .popup-container{

@@ -49,20 +49,6 @@
 
             let popup =  `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
             
-            // let circle = L.circle([d.lat, d.lon], {
-            //     // Remove border
-            //     color: '#333',
-            //     weight: 2,
-            //     fillColor: this_source == 'radical' ? pink : blue,
-            //     fillOpacity: 1,
-            //     radius: 300
-            // }).addTo(map)
-
-            // circle.bindTooltip(popup)
-            // .on('click', function(e){
-            //     active_event.set(d['uid']);
-            // })
-
             let circle = L.marker([d.lat, d.lon], {
                 icon: L.divIcon({
                     className: ['event-icon', 'event', this_source].join(' '),
@@ -79,12 +65,6 @@
             console.log(circle._icon);
             circle._icon.id = d['uid'];
 
-
-            // assign class to circle
-            // circle._path.classList.add('event');
-            // circle._path.classList.add(this_source);
-            // // // Add id
-            // circle._path.id = d['uid'];
             region_markers.push(circle);
         })
         map.flyToBounds( L.featureGroup(region_markers).getBounds(), {padding: [120,120], maxZoom:11} );
