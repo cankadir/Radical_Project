@@ -101,13 +101,7 @@ main{
   font-family: "Noto Sans", sans-serif;
 }
 
-.region-deradical{
-  border: 3px solid #F0227C;
-}
 
-.region-radical{
-  border: 3px solid #F0227C;
-}
 
 .region-circle .region-annot{
   width: 100%;
@@ -189,8 +183,16 @@ main{
   position: absolute;
 }
 
+.region-deradical{
+  border: 3px solid #F0227C;
+}
+
+.region-radical{
+  border: 3px solid #1D4ED8;
+}
+
 .event-icon.radical{
-  background: #f0227C;
+  background: #1D4ED8;
 }
 
 .event-icon.deradical{

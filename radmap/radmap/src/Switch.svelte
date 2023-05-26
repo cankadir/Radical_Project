@@ -1,18 +1,19 @@
 
 <script>
 
+
     import {source} from './store.js';
     let on_off = 'off';
     function swith_source(e){
         if(e.target.checked === true){
             source.set( 'deradical' );
             on_off = 'on'
-            document.getElementById('rad-switch').style.backgroundColor = '#6366F1';
+            document.getElementById('rad-switch').style.backgroundColor = '#f0227C';
         }
         else{
             source.set( 'radical' );
             on_off = 'off'
-            document.getElementById('rad-switch').style.backgroundColor = '#f0227C';
+            document.getElementById('rad-switch').style.backgroundColor = '#1D4ED8';
 
         }
     }

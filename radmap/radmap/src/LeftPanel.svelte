@@ -98,10 +98,11 @@
         <!-- Left Info contect based on App State -->
         {#if state == 'world'}
             <!-- <div id='arrow'>&#8614;</div> -->
-            <div><span class="country-title">DeRad Title</span></div>
-            <span class="event-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt sed ea minus aut quo, fugit odit ipsam, laborum, iure quas deserunt quos eius adipisci mollitia possimus voluptatum ad. Quasi, facilis.</span>
+            <div><span class="country-title">Welome to the D.Rad Interactive map!</span></div>
+            <br>
+            <span class="event-info">Radical Project's RadMap is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
             <br><br>
-            <span class="event-title">Number of Recorded Events</span>
+            <span class="event-title">To begin exploring, click on one of the countries listed below.</span>
 
             {#each Object.entries(country_counts) as [key, value]}
                 <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}}>
