@@ -98,9 +98,9 @@
         <!-- Left Info contect based on App State -->
         {#if state == 'world'}
             <!-- <div id='arrow'>&#8614;</div> -->
-            <div><span class="country-title">Welome to the D.Rad Interactive map!</span></div>
+            <div><span class="country-title">Welcome to the D.Rad Interactive Map</span></div>
             <br>
-            <span class="event-info">Radical Project's RadMap is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
+            <span class="event-info">The D.Rad interactive map is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
             <br><br>
             <span class="event-title">To begin exploring, click on one of the countries listed below.</span>
 
