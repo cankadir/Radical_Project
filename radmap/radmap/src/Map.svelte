@@ -1,5 +1,7 @@
 
 <script>
+    // Initialize Map
+    // Store map object to store
 
     import { onMount } from 'svelte';
     import L from 'leaflet';
@@ -11,16 +13,20 @@
         zoomSnap: 0.25,
     });
     
+    // Separate labels and tiles to have labels above polygons
     map.createPane('labels');
     map.getPane('labels').style.zIndex = 550;
     map.getPane('labels').style.pointerEvents = 'none';
 
+    // Save map object to store
     LMap.set(map);
 
+    // Map Tiles
     var CartoDB_DarkMatterNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     }).addTo(map);
 
+    // Map Labels
     var CartoDB_DarkMatterOnlyLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
         pane: 'labels'
     }).addTo(map);
@@ -28,8 +34,8 @@
     // Move zoom control to top right
     map.zoomControl.setPosition('topright');
 
+    //For Resize Updates
     onMount(() => {
-        //For Resize Updates
         let mapContainer = document.getElementById('main-map');
         mapContainer.appendChild(map.getContainer());
         map.getContainer().style.width = "100%";

@@ -45,7 +45,6 @@ main{
 #left-panel{
   margin: 0;
   width: 290px;
-  /* width:60px; */
   height: 100vh;
   position: absolute;
   top: 0;
@@ -63,8 +62,6 @@ main{
   justify-content: center;
   align-items: center;
   background-color: black;
-  /* padding-left: 20px;
-  padding-right: 20px; */
 }
 
 
@@ -197,6 +194,10 @@ main{
 
 .event-icon.deradical{
   background: #f0227C;
+}
+
+#selected-event{
+  border: white 2px solid;
 }
 
 .popup-container{

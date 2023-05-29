@@ -1,4 +1,7 @@
 <script>
+    // Adds the points markers to the map as DivIcons (dynamically sized on zoom)
+    // Tooltips + click functions on circle markers 
+    // Only points in the selected region are shown, data is filtred by Source and Region.
 
     import {LMap, source, country, region, app_state, active_event} from './store.js';
     export let points;
@@ -31,7 +34,7 @@
     let map = $LMap;
     
     function reset_event_Markers(){
-        // remove all markers wirh region class
+        // remove all markers with region class
         document.querySelectorAll('.event').forEach(function(region){
 			region.parentNode.removeChild(region);
 		})
@@ -56,17 +59,32 @@
                 })
             }).addTo(map)
 
-            circle.bindTooltip(popup)
-            .on('click', function(e){
+            // add tooltip
+            circle.bindTooltip(popup);
+
+            // on click function
+            circle.on('click', function(e){
+
+                // Remove all selected-event id's
+                document.querySelectorAll('#selected-event').forEach(function(region){
+                    // remove only selected-event id, leave the rest of its id
+                    region.id = region.id.replace('selected-event', '');
+                })
+                // Set active event to the selected id in the store
                 active_event.set(d['uid']);
+
+                // Add selected-event id to the clicked marker
+                e.target._icon.setAttribute("id","selected-event")
             })
 
-            // console.log(d['uid']);
-            console.log(circle._icon);
+            // add unique id (from excel sheet) to the marker
             circle._icon.id = d['uid'];
 
+            // Save the cirlce markers in an array
             region_markers.push(circle);
         })
+
+        // Zoom to bounds of the events in the region.
         map.flyToBounds( L.featureGroup(region_markers).getBounds(), {padding: [120,120], maxZoom:11} );
 
     }else{

@@ -1,5 +1,9 @@
 
 <script>
+    // In between state,
+    // Data is grouped based on Region columns and counted.
+    // A circle markers is assigned ans sized based on the number of events in that region/source.
+
 
     import {LMap, source, country, region, app_state} from './store.js';
     import {groupBy, mean, map} from 'lodash';
@@ -11,11 +15,10 @@
     let pink = '#f0227C';
     
     let points = data.main;
-    // let info = data.country_info;
 
     let map_object = $LMap;
 
-    // GET STORE VARIABLES
+    // STORE VARIABLES
     let state;
     app_state.subscribe(value => {
         state = value;
@@ -72,6 +75,7 @@
 
         for (const [key, value] of Object.entries(region_groups)) {
 
+            // Avg position for region marker
             let lat = mean(map(value, 'lat'));
             let lon = mean(map(value, 'lon'));
             let country = value[0].NAME;
@@ -89,6 +93,7 @@
                 num_events_norm = 12;
             }
 
+            // Regions are divIcons with border radiuses
             let divIcon = L.divIcon({
                             className: `region ${source} ${country}`,
                             id: key,

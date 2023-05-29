@@ -7,22 +7,15 @@
     const map_object = $LMap;
     export let polygon;
 
-    // let southwest = [25.0,-20.0];
-    // let northeast = [75.0,45.0 ];
-    // let bounds =  [southwest, northeast] //L.latLngBounds( lower_left, upper_right );
-    // let bound_props = { padding: [1,1] , maxZoom: 4}
-
-    // APP STATE
+    // STORE VALUES
     let state;
     app_state.subscribe(value => {
         state = value;
     });
 
+    // At world state, whole EU and seeing countries
     $ : if(state === 'world' ){
-        console.log( "I am here" )
         map_object.setView([52,0], 3.25);
-        console.log( map_object.getZoom() )
-
         country.set('');
         region.set('');
     };
@@ -32,11 +25,12 @@
         this_country = value;
     });
 
+    // If no country is selected
     $: if(state === 'country' && this_country !== ''){
-        // console.log(polygon.properties)
+        // Filter geojson to only show this country
         let filtered_polygon = polygon.filter(d => d.properties.name == this_country);
         
-
+        // Fly to the country with padding
         setTimeout(function(){
             map_object.flyToBounds(
                 // Filter geojson to only show this country
@@ -60,9 +54,7 @@
     function onEachFeature(feature, layer) {
         //Only bind popup if Owner Column is not empty
         if( feature.properties.name ){
-            // let popup = `<b>${feature.properties.name}</b>`;
-            // layer.bindTooltip(popup,{permanent: false, sticky:true, direction: 'center', className: 'tooltip'});
-            layer.on({ click:activePolygon }) 
+            layer.on({ click:activePolygon }) // Changes store values for active stuff
         }
     };
 

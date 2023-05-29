@@ -156,7 +156,8 @@
         {/if}
 
     </div>
-
+    
+    <!-- SWITCH ELEMENT, Rad, Derad -->
     {#if state !== 'world'}
         <div id="switch-holder">
             <Switch/>

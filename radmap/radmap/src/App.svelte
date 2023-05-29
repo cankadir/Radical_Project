@@ -7,14 +7,15 @@
 	import LeftPanel from './LeftPanel.svelte';
 	import Regions from './Regions.svelte';
 	import Events from './Events.svelte';
-	import Legend from './Legend.svelte';
 
 	// APP STATE
+	// This defines the state of the app, 
+	// Country, region or event are the 3 zoom scaled and event. 
 	let state;
 	app_state.subscribe(value => {
 		state = value;
 	});
-	$: if( state){ "APP STATE:" , console.log(state) }
+	$: if( state ){ "APP STATE:" , console.log(state) }
 	source.set( "radical" );
 
 	// DATA
@@ -36,6 +37,7 @@
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
+			// 3. Country Info, this comes from a different file. 
 			const country_info = await fetch('data/DRad_County.json')
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
@@ -52,22 +54,18 @@
 </svelte:head>
 
 <main>
+	{#if (data.main.length > 0) && (data.world.length > 0) && (data.country_info.length > 0)}
 
-  {#if (data.main.length > 0) && (data.world.length > 0) && (data.country_info.length > 0)}
+		<!-- LEFT PANEL -->
+		<LeftPanel data_all={data} />
+		
+		<!-- RIGHT PANEL MAP -->
+		<Map>
+			<Countries polygon={data.world} />
+			<Regions data = {data}/>
+			<Events points = {data.main} />
+		</Map>
 
-			<!-- LEFT PANEL -->
-			<LeftPanel data_all={data} />
-			
-			<!-- RIGHT PANEL MAP -->
-			<Map>
-				<Countries polygon={data.world} />
-				<Regions data = {data}/>
-				<Events points = {data.main} />
-			</Map>
-
-			<!-- <Legend /> -->
-
-  {/if}
- 
+	{/if}
 </main>
 
