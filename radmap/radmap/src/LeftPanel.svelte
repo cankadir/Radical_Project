@@ -107,7 +107,7 @@
             {#each Object.entries(country_counts) as [key, value]}
                 <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}}>
                     <span class="country-name">{key}</span>
-                    <span class="country-count">{value}</span>
+                    <!-- <span class="country-count">{value}</span> -->
                 </div>
             {/each}
 
