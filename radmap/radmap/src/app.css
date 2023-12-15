@@ -181,19 +181,23 @@ main{
 }
 
 .region-deradical{
-  border: 3px solid #F0227C;
+  /* #14B8A6 */
+  border: 3px solid #A855F7;
 }
 
 .region-radical{
-  border: 3px solid #1D4ED8;
+  /* #A855F7 */
+  border: 3px solid #14B8A6;
 }
 
 .event-icon.radical{
-  background: #1D4ED8;
+  /* #A855F7 */
+  background: #14B8A6;
 }
 
 .event-icon.deradical{
-  background: #f0227C;
+  /* #14B8A6 */
+  background: #A855F7;
 }
 
 #selected-event{
