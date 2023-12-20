@@ -33,7 +33,7 @@
 			data.world = json.features;
 
 			// 2. Radicalization Data
-			const main_data = await fetch('data/data_update_4.json') //'data/data.json'
+			const main_data = await fetch('data/data_update_5.json') 
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
@@ -41,6 +41,8 @@
 			const country_info = await fetch('data/DRad_County.json')
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
+
+			console.log(data.main)
 
 		})
 

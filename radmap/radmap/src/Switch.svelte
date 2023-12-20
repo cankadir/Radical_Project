@@ -8,12 +8,12 @@
         if(e.target.checked === true){
             source.set( 'deradical' );
             on_off = 'on'
-            document.getElementById('rad-switch').style.backgroundColor = '#f0227C';
+            // document.getElementById('rad-switch').style.backgroundColor = '#f0227C';
         }
         else{
             source.set( 'radical' );
             on_off = 'off'
-            document.getElementById('rad-switch').style.backgroundColor = '#1D4ED8';
+            // document.getElementById('rad-switch').style.backgroundColor = '#1D4ED8';
 
         }
     }
@@ -63,7 +63,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #f0227C;
+        background-color: #333;
         -webkit-transition: .4s;
         transition: .4s;
     }
