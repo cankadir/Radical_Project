@@ -50,11 +50,22 @@
         let region_markers =  []
         filtered_data.forEach(function(d){
 
-            let popup =  `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
+            let popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
             
+            let class_names;
+            if( d['source_2'] == '83' ){
+                class_names = ['event-icon', 'event', this_source, 'add-83']
+                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Program Name']}</p><br><p>${d['address']}</p></div>`
+            }else if( d['source_2'] == '93' ){
+                class_names = ['event-icon', 'event', this_source, 'add-93']
+                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Program Name']}</p><br><p>${d['address']}</p></div>`
+            } else{
+                class_names = ['event-icon', 'event', this_source]
+            }
+
             let circle = L.marker([d.lat, d.lon], {
                 icon: L.divIcon({
-                    className: ['event-icon', 'event', this_source].join(' '),
+                    className: class_names.join(' '),
                     iconSize: [15,15]
                 })
             }).addTo(map)
