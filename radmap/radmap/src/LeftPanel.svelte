@@ -4,7 +4,8 @@
     import {app_state, country, region, source, active_event} from './store.js';
     import Switch from './Switch.svelte';
     import {groupBy, mean, map} from 'lodash';
-    
+    import Carousel from 'svelte-carousel';
+
     export let data_all;
     
     let data = data_all.main;
@@ -71,7 +72,7 @@
     $: if(this_region && this_source){
         region_data = data.filter(d => d.source == this_source && d.Region == this_region);
         region_data = region_data[0]
-        console.log(region_data);
+        // console.log(region_data);
     }
 
     // If a specific event is cliked make it active
@@ -97,7 +98,7 @@
         
         <!-- Left Info contect based on App State -->
         {#if state == 'world'}
-            <!-- <div id='arrow'>&#8614;</div> -->
+
             <div><span class="country-title">Welcome to the D.Rad Interactive Map</span></div>
             <br>
             <span class="event-info">The D.Rad interactive map is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
@@ -112,7 +113,7 @@
             {/each}
 
         {:else}
-
+            <!-- TURKEY , ISREAL, ETC -->
             {#if state == 'country'}
                 <p class="back-button" on:click={goBack}>Back to World</p>
                 {#if filtered_data}
@@ -121,21 +122,28 @@
                     <p class="country-info"> {filtered_info['Info']}</p>
                 {/if}
             {/if}
-
+            <!-- Data Defined Regions, Istanbul, Northern Silesia etc, lat lon is the avgof all points -->
             {#if state == 'region'}
                 <div class="go-back">
-                    <span class="back-button" on:click={goBack}>Back to World</span>
+                    <span class="back-button" on:click={goBack} on:keydown={goBack}>Back to World</span>
                     <span class="back-button" style="text-decoration:none">&gt;</span>
-                    <span class="back-button" on:click={gotoCountry}>{this_country}</span>
+                    <span class="back-button" on:click={gotoCountry} on:keydown={goBack}>{this_country}</span>
                 </div>
 
                 <h3 class="info-content">{this_region}</h3>
 
                 {#if active_id != ''}
                     <!-- COMMON COLUMNS -->
-                    <p><span class='event-title'>Event Type: </span><span class="event-info">{active_event_data['Event Type']}</span></p>
-                    <p><span class='event-title'>Event Description:</span><br><span class="event-info">{active_event_data['Event Description']}</span></p>
-                    <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data['Location']}</span></p>
+                    <!-- For both rad and derad 2 columns i exist, but derad have more columns -->
+
+                    <!-- If active_event_data['Event Type'] is not null -->
+                    {#if active_event_data['Event Type']}
+                        <p><span class='event-title'>Event Type: </span><span class="event-info">{active_event_data['Event Type']}</span></p>
+                    {/if}
+                    <!-- If active_event_data['Location'] is not null -->
+                    {#if active_event_data['Location']}
+                        <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data['Location']}</span></p>
+                    {/if}
 
                     {#if this_source === 'deradical'}
                         <!-- {#each de_rad_columns as column} -->
@@ -144,9 +152,39 @@
                                 <p> <span class='event-title'>{column}</span>: <span class="event-info">{active_event_data[column]}</span></p>
                             {/if}
                         {/each}
+                        <!-- If links exist but <a> tag instead of <span> -->
                         {#if active_event_data['Links']}
                             <a target="_blank" href={active_event_data['Links']}>Event Link</a>
                         {/if}
+
+                        <!-- Carousel goes here -->
+                        {#if active_event_data['Image 1']}
+                            <div class="photo-container">
+                                
+                                <Carousel
+                                    let:showPrevPage
+                                    let:showNextPage
+                                >
+                                    <div slot="prev" on:click={showPrevPage} on:keydown={showPrevPage} class="custom-arrow custom-arrow-prev"><i>&#10094;<i /></div>
+                                        {#each ['1', '2', '3'] as image_row}
+                                            {#if active_event_data[ 'Image ' + image_row ]}
+                                                {#if active_event_data[ 'Image ' + image_row ] != 'nan'}
+                                                    <div class="photo-and-caption">
+                                                        <img class="event-images" src={"assets/images/deradImgs/" + active_event_data[ 'Image ' + image_row ] + ".jpg"} alt={active_event_data[ 'Image ' + image_row ]}/>
+                                                        <div class="caption">
+                                                            <p class="photo-caption">{active_event_data[ 'Caption ' + image_row ]}</p>
+                                                        </div>
+                                                    </div>
+                                                {/if}
+                                            {/if}
+                                        {/each}
+
+                                    <div slot="next" on:click={showNextPage} on:keydown={showNextPage} class="custom-arrow custom-arrow-next"><i>&#10095;<i /></div>
+                                </Carousel>
+
+                            </div>
+                        {/if}
+
                     {/if}
                 
                 {:else}
@@ -168,10 +206,24 @@
 
 <style>
 
-    #arrow{
-        font-size: 20pt;
-        margin: 20px auto;
-        cursor: pointer;
+    .caption{
+        padding: 0px 15px;
+        text-align: center;
+    }
+
+    .photo-caption{
+        font-size: 10pt;
+        color: #999;
+        font-style: italic;
+        text-align: center;
+        font-weight: 300;
+    }
+
+    .event-images{
+        width:100%;
+        height:100%;
+        object-fit: contain;
+        max-height: 250px;
     }
 
     .back-button{
@@ -180,4 +232,35 @@
         color: #999;
         text-decoration: underline #333
     }
+
+    .custom-arrow{
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+        color:white;
+        font-size:18pt;
+        font-weight: 900;
+        width:30px;
+        height:100%;
+        position:absolute;
+        z-index:3;
+        background:rgba(255,255,255,0.15)!important;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .custom-arrow.custom-arrow-next{
+        right:0;
+    }
+        
+    .custom-arrow.custom-arrow-prev{
+        left:0
+    }
+
+    i{
+        font-style: normal!important;
+    }
+
+
 </style>

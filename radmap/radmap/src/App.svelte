@@ -42,7 +42,7 @@
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
 
-			console.log(data.main)
+			// console.log(data.main)
 
 		})
 
@@ -52,7 +52,9 @@
 	<link rel="stylesheet" href="assets/leaflet/leaflet.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
 </svelte:head>
 
 <main>
