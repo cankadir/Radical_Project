@@ -145,6 +145,12 @@
                         <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data['Location']}</span></p>
                     {/if}
 
+                    {#if this_source === 'radical'}
+                        {#if active_event_data['Event Description']}
+                            <p><span class='event-title'>Event Description: </span><span class="event-info">{active_event_data['Event Description']}</span></p>
+                        {/if}
+                    {/if}
+
                     {#if this_source === 'deradical'}
                         <!-- {#each de_rad_columns as column} -->
                         {#each ['Program Name','Approach','Targets','Scale','Agents','Date'] as column}
@@ -158,7 +164,7 @@
                         {/if}
 
                         <!-- Carousel goes here -->
-                        {#if active_event_data['Image 1']}
+                        {#if active_event_data['Image 1'] != 'NA' }
                             <div class="photo-container">
                                 
                                 <Carousel
@@ -168,12 +174,16 @@
                                     <div slot="prev" on:click={showPrevPage} on:keydown={showPrevPage} class="custom-arrow custom-arrow-prev"><i>&#10094;<i /></div>
                                         {#each ['1', '2', '3'] as image_row}
                                             {#if active_event_data[ 'Image ' + image_row ]}
-                                                {#if active_event_data[ 'Image ' + image_row ] != 'nan'}
+                                                {#if active_event_data[ 'Image ' + image_row ] != 'NA'}
+                                                    
                                                     <div class="photo-and-caption">
+                                                        <!-- <p>{active_event_data[ 'Image ' + image_row ]}</p> -->
                                                         <img class="event-images" src={"assets/images/deradImgs/" + active_event_data[ 'Image ' + image_row ] + ".jpg"} alt={active_event_data[ 'Image ' + image_row ]}/>
+                                                        
                                                         <div class="caption">
                                                             <p class="photo-caption">{active_event_data[ 'Caption ' + image_row ]}</p>
                                                         </div>
+
                                                     </div>
                                                 {/if}
                                             {/if}
@@ -188,7 +198,9 @@
                     {/if}
                 
                 {:else}
-                    <p><span class="event-info">{region_data['Region Info']}</span></p>
+                    {#if region_data['Region Info']}
+                        <p><span class="event-info">{region_data['Region Info']}</span></p>
+                    {/if}
                 {/if}
             {/if}
         {/if}
