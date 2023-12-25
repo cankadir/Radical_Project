@@ -33,7 +33,7 @@
 			data.world = json.features;
 
 			// 2. Radicalization Data
-			const main_data = await fetch('data/data_update_6.json') 
+			const main_data = await fetch('data/data_update_7.json') 
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
@@ -49,7 +49,7 @@
 <svelte:head>
 	<link rel="stylesheet" href="assets/leaflet/leaflet.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" >
 	<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,700;1,300&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
 

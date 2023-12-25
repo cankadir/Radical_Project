@@ -194,9 +194,7 @@
 
                             </div>
                         {/if}
-
                     {/if}
-                
                 {:else}
                     {#if region_data['Region Info']}
                         <p><span class="event-info">{region_data['Region Info']}</span></p>
