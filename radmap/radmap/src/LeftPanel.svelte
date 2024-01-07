@@ -51,6 +51,15 @@
         app_state.set('country');
     }
 
+    function removePhotoContainers( x ){
+        console.log('remove photo containers');
+        console.log(x);
+        let photo_containers = document.getElementsByClassName('photo-container');
+        for (let i = 0; i < photo_containers.length; i++) {
+            photo_containers[i].remove();
+        }
+    }
+
     let country_counts = groupBy( data, 'Country');
     for (const [key, value] of Object.entries(country_counts)) {
         if (key !== 'null'){
@@ -165,34 +174,35 @@
 
                         <!-- Carousel goes here -->
                         {#if active_event_data['Image 1'] != 'NA' }
-                            <div class="photo-container">
+                            {#key active_event_data['Image 1']}
                                 
-                                <Carousel
-                                    let:showPrevPage
-                                    let:showNextPage
-                                >
-                                    <div slot="prev" on:click={showPrevPage} on:keydown={showPrevPage} class="custom-arrow custom-arrow-prev"><i>&#10094;<i /></div>
-                                        {#each ['1', '2', '3'] as image_row}
-                                            {#if active_event_data[ 'Image ' + image_row ]}
-                                                {#if active_event_data[ 'Image ' + image_row ] != 'NA'}
-                                                    
-                                                    <div class="photo-and-caption">
-                                                        <!-- <p>{active_event_data[ 'Image ' + image_row ]}</p> -->
-                                                        <img class="event-images" src={"assets/images/deradImgs/" + active_event_data[ 'Image ' + image_row ] + ".jpg"} alt={active_event_data[ 'Image ' + image_row ]}/>
-                                                        
-                                                        <div class="caption">
-                                                            <p class="photo-caption">{active_event_data[ 'Caption ' + image_row ]}</p>
+                                <div class="photo-container">
+                                    
+                                    <Carousel
+                                        let:showPrevPage
+                                        let:showNextPage
+                                    >
+                                        <div slot="prev" on:click={showPrevPage} on:keydown={showPrevPage} class="custom-arrow custom-arrow-prev"><i>&#10094;<i /></div>
+                                            {#each ['1', '2', '3'] as image_row}
+                                                
+                                                    {#if active_event_data[ 'Image ' + image_row ] != 'NA'}
+                                                        <div class="photo-and-caption">
+                                                            <img class="event-images" src={"assets/images/deradImgs/" + active_event_data[ 'Image ' + image_row ] + ".jpg"} alt={active_event_data[ 'Image ' + image_row ]}/>
+                                                            
+                                                            <div class="caption">
+                                                                <p class="photo-caption">{active_event_data[ 'Caption ' + image_row ]}</p>
+                                                            </div>
                                                         </div>
+                
+                                                    {/if}
 
-                                                    </div>
-                                                {/if}
-                                            {/if}
-                                        {/each}
+                                            {/each}
 
-                                    <div slot="next" on:click={showNextPage} on:keydown={showNextPage} class="custom-arrow custom-arrow-next"><i>&#10095;<i /></div>
-                                </Carousel>
+                                        <div slot="next" on:click={showNextPage} on:keydown={showNextPage} class="custom-arrow custom-arrow-next"><i>&#10095;<i /></div>
+                                    </Carousel>
 
-                            </div>
+                                </div>
+                            {/key}
                         {/if}
                     {/if}
                 {:else}

@@ -42,6 +42,7 @@
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
 
+			console.log("DATA:", data)
 		})
 
 </script>
