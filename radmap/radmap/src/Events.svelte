@@ -3,7 +3,7 @@
     // Tooltips + click functions on circle markers 
     // Only points in the selected region are shown, data is filtred by Source and Region.
 
-    import {LMap, source, country, region, app_state, active_event} from './store.js';
+    import {LMap, source, country, region, app_state, active_event, language} from './store.js';
     export let points;
     import L from 'leaflet';
 
@@ -31,6 +31,17 @@
         state = value;
     });
 
+    // Get langugage from store
+    let selectedLanguage;
+    language.subscribe(value => {
+        selectedLanguage = value;
+    });
+
+    // create a reactive new variable that is "" if the language is english and "ar" if the language is arabic
+    let lang = '';
+    $: lang = selectedLanguage === 'en' ? '' : '_AR';
+    console.log(lang , ' : is changed');
+
     let map = $LMap;
     
     function reset_event_Markers(){
@@ -50,7 +61,7 @@
         let region_markers =  []
         filtered_data.forEach(function(d){
 
-            let popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
+            let popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d[`Event Type${lang}`]}</p><br><p>${d['address']}</p></div>`
             
             let class_names;
             if( d['source_2'] == '83' ){

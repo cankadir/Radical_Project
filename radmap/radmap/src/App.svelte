@@ -7,6 +7,7 @@
 	import LeftPanel from './LeftPanel.svelte';
 	import Regions from './Regions.svelte';
 	import Events from './Events.svelte';
+	import LanguageDd from './LanguageDD.svelte';
 
 	// APP STATE
 	// This defines the state of the app, 
@@ -25,6 +26,7 @@
 			country_info: [],
 		}
 
+
 	onMount(async () => {
 			// Import Data from 3 Resources
 			// 1. World Administrative Boundaries
@@ -33,7 +35,7 @@
 			data.world = json.features;
 
 			// 2. Radicalization Data
-			const main_data = await fetch('data/data_update_7.json') 
+			const main_data = await fetch('data/data_update_8.json') 
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
@@ -42,7 +44,7 @@
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
 
-			console.log("DATA:", data)
+			console.log("DATA:", data.main)
 		})
 
 </script>
@@ -62,6 +64,9 @@
 		<!-- LEFT PANEL -->
 		<LeftPanel data_all={data} />
 		
+		<!-- LANGUAGE DROPDOWN -->
+		<LanguageDd />
+
 		<!-- RIGHT PANEL MAP -->
 		<Map>
 			<Countries polygon={data.world} />

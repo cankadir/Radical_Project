@@ -1,7 +1,7 @@
 <script>
     
     import { each } from 'svelte/internal';
-    import {app_state, country, region, source, active_event} from './store.js';
+    import {app_state, country, region, source, active_event, language} from './store.js';
     import Switch from './Switch.svelte';
     import {groupBy, mean, map} from 'lodash';
     import Carousel from 'svelte-carousel';
@@ -37,6 +37,23 @@
         active_id = value;
     });
 
+    let selectedLanguage;
+    language.subscribe(value => {
+        selectedLanguage = value;
+    });
+
+    // create a reactive new variable that is "" if the language is english and "ar" if the language is arabic
+    let lang = '';
+    $: lang = selectedLanguage === 'en' ? '' : '_AR';
+
+    function aligntext(x){
+        if(x === 'en'){
+            return 'direction: ltr; text-align: left;';
+        }else{
+            return 'direction: rtl; text-align: right;';
+        }
+    }
+
     // BACK FUNCTIONS
     function goBack(){
         app_state.set('world');
@@ -51,14 +68,6 @@
         app_state.set('country');
     }
 
-    function removePhotoContainers( x ){
-        console.log('remove photo containers');
-        console.log(x);
-        let photo_containers = document.getElementsByClassName('photo-container');
-        for (let i = 0; i < photo_containers.length; i++) {
-            photo_containers[i].remove();
-        }
-    }
 
     let country_counts = groupBy( data, 'Country');
     for (const [key, value] of Object.entries(country_counts)) {
@@ -81,7 +90,6 @@
     $: if(this_region && this_source){
         region_data = data.filter(d => d.source == this_source && d.Region == this_region);
         region_data = region_data[0]
-        // console.log(region_data);
     }
 
     // If a specific event is cliked make it active
@@ -107,24 +115,36 @@
         
         <!-- Left Info contect based on App State -->
         {#if state == 'world'}
+            <div style={aligntext(selectedLanguage)} >
+            <!-- ARABIC ENGLISH switch for Main Left page -->
+                {#key selectedLanguage}
+                    {#if selectedLanguage == 'en'}
+                        <div><span class="country-title">Welcome to the D.Rad Interactive Map</span></div>
+                        <br>
+                        <span class="event-info">The D.Rad interactive map is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
+                        <br><br>
+                        <span class="event-title">To begin exploring, click on one of the countries listed below.</span>
+                    {:else}
+                        <div style={aligntext(selectedLanguage)}><span class="country-title" >مرحبًا بك في خريطة D.Rad التفاعلية</span></div>
+                        <br>
+                        <span class="event-info">خريطة D.Rad التفاعلية هي تطبيق ويب مبتكر وتفاعلي يقدم خريطة طريق شاملة وجذابة بصريًا للأفراد الذين يسعون إلى استكشاف وفهم عالم الأيديولوجيات المتطرفة. بفضل واجهتها سهلة الاستخدام ومحتواها الغني، تعد خريطة D.Rad التفاعلية مصدرًا فريدًا لأي شخص مهتم بدراسة التطرف والاستقطاب في أوروبا والشرق الأوسط.</span>
+                        <br><br>
+                            <span class="event-title">لبدء الاستكشاف، انقر فوق أحد البلدان المذكورة أدناه.</span>
+                    {/if}
+                {/key}
 
-            <div><span class="country-title">Welcome to the D.Rad Interactive Map</span></div>
-            <br>
-            <span class="event-info">The D.Rad interactive map is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
-            <br><br>
-            <span class="event-title">To begin exploring, click on one of the countries listed below.</span>
-
-            {#each Object.entries(country_counts) as [key, value]}
-                <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}}>
-                    <span class="country-name">{key}</span>
-                    <!-- <span class="country-count">{value}</span> -->
-                </div>
-            {/each}
+                <!-- Print the Countries as Clickable -->
+                {#each Object.entries(country_counts) as [key, value]}
+                    <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}} on:keydown={() => {country.set(key); app_state.set('country');}}>
+                        <span class="country-name">{key}</span>
+                    </div>
+                {/each}
+            </div> 
 
         {:else}
-            <!-- TURKEY , ISREAL, ETC -->
+            <!-- One Level in: TURKEY , ISREAL, ETC -->
             {#if state == 'country'}
-                <p class="back-button" on:click={goBack}>Back to World</p>
+                <p class="back-button" on:click={goBack} on:keydown={goBack}>Back to World</p>
                 {#if filtered_data}
                     <p class="country-title">{this_country}</p>
                     <p class="country-info"> There are {filtered_data.length} {this_source}ization events</p>
@@ -146,27 +166,36 @@
                     <!-- For both rad and derad 2 columns i exist, but derad have more columns -->
 
                     <!-- If active_event_data['Event Type'] is not null -->
-                    {#if active_event_data['Event Type']}
-                        <p><span class='event-title'>Event Type: </span><span class="event-info">{active_event_data['Event Type']}</span></p>
-                    {/if}
-                    <!-- If active_event_data['Location'] is not null -->
-                    {#if active_event_data['Location']}
-                        <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data['Location']}</span></p>
-                    {/if}
-
-                    {#if this_source === 'radical'}
-                        {#if active_event_data['Event Description']}
-                            <p><span class='event-title'>Event Description: </span><span class="event-info">{active_event_data['Event Description']}</span></p>
+                    <div style={aligntext(selectedLanguage)} >
+                        {#if active_event_data['Event Type']}
+                            <p><span class='event-title'>Event Type: </span><span class="event-info">{active_event_data[`Event Type${lang}`]}</span></p>
                         {/if}
-                    {/if}
+                        <!-- If active_event_data['Location'] is not null -->
+                        {#if active_event_data['Location']}
+                            <p><span class='event-title'>Location: </span><br><span class="event-info">{active_event_data[`Location${lang}`]}</span></p>
+                        {/if}
+
+                        {#if this_source === 'radical'}
+                            {#if active_event_data['Event Description']}
+                                <p><span class='event-title'>Event Description: </span><span class="event-info">{active_event_data[`Event Description${lang}`]}</span></p>
+                            {/if}
+                        {/if}
+                    </div>
 
                     {#if this_source === 'deradical'}
-                        <!-- {#each de_rad_columns as column} -->
-                        {#each ['Program Name','Approach','Targets','Scale','Agents','Date'] as column}
-                            {#if active_event_data[column]}
-                                <p> <span class='event-title'>{column}</span>: <span class="event-info">{active_event_data[column]}</span></p>
-                            {/if}
-                        {/each}
+                        <!-- Program Name stays English -->
+                        <div style={aligntext(selectedLanguage)} >
+                            <p> <span class='event-title'>Program Name</span>: <span class="event-info">{active_event_data["Program Name"]}</span></p>
+                        
+                            {#each ['Approach','Targets','Scale','Agents'] as column}
+                                {#if active_event_data[column]}
+                                    <p><span class='event-title'>{column}</span>: <span class="event-info">{active_event_data[column + lang]}</span></p>
+                                {/if}
+                            {/each}
+
+                            <div><span class='event-title'>Date</span>: <p class="event-info" style='display:inline;' dir="auto">{active_event_data[`Date${lang}`]}</p></div>
+                        </div>
+
                         <!-- If links exist but <a> tag instead of <span> -->
                         {#if active_event_data['Links']}
                             <a target="_blank" href={active_event_data['Links']}>Event Link</a>
