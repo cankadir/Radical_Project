@@ -50,7 +50,12 @@
         let region_markers =  []
         filtered_data.forEach(function(d){
 
-            let popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`
+            let popup;
+            if (d['source'] == 'radical'){
+                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`;
+            } else {
+                popup = `<div class="popup-container"><b>${d['Program Name']}</b><br><p>${d['address']}</p></div>`;
+            }
             
             let class_names;
             if( d['source_2'] == '83' ){
