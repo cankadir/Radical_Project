@@ -110,7 +110,7 @@
 
             <div><span class="country-title">Welcome to the D.Rad Interactive Map</span></div>
             <br>
-            <span class="event-info">The D.Rad interactive map is an innovative and interactive web application that offers a comprehensive and visually appealing roadmap for individuals seeking to explore and understand the world of radical ideologies. With its user-friendly interface and rich content, the D.Rad interactive map is a unique resource for anyone interested in examining radicalisation and polarisation in Europe and the Middle East.</span>
+            <span class="event-info">The D.Rad interactive map is a visually appealing roadmap for anyone interested in examining radicalisation and polarisation in Europe and the Middle East. As of December 2023, there are a number of different datasets mapped onto this map. The <span style="color:#1D4ED8">blue</span> dots represent situations of radicalization, revealing information about the type of event that took place as well as its summary. The <span style="color:#f0227C">pink</span> dots represent stakeholders, their activities and de-radicalisation programmes. The <span style="color:#A855F7">purple</span> dots are a selection of arts and sports related social inclusion activities in Israel, Poland, Serbia, Slovenia and the United Kingdom. Finally, the <span style="color:#14B8A6">green</span> dots represent spatial aspects of deradicalisation in Austria, Finland, Georgia, Kosovo and Italy. </span>
             <br><br>
             <span class="event-title">To begin exploring, click on one of the countries listed below.</span>
 
