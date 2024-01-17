@@ -35,7 +35,7 @@
 			data.world = json.features;
 
 			// 2. Radicalization Data
-			const main_data = await fetch('data/data_update_8.json') 
+			const main_data = await fetch('data/data_update_9.json') 
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
