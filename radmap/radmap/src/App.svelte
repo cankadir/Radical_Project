@@ -35,12 +35,12 @@
 			data.world = json.features;
 
 			// 2. Radicalization Data
-			const main_data = await fetch('data/data_update_9.json') 
+			const main_data = await fetch('data/data_update_10.json') 
 			const json_main_data = await main_data.json()
 			data.main = json_main_data;
 
 			// 3. Country Info, this comes from a different file. 
-			const country_info = await fetch('data/DRad_County.json')
+			const country_info = await fetch('data/DRad_County_2.json')
 			const json_country_info = await country_info.json()
 			data.country_info = json_country_info;
 

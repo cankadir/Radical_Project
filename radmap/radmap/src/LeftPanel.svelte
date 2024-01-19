@@ -68,6 +68,16 @@
         app_state.set('country');
     }
 
+    // find country in info
+    function findCountryName(country, selectedLanguage){
+        if (selectedLanguage === 'en'){
+            return info.find(d => d.Country == country)['Country'];
+        }else {
+            return info.find(d => d.Country == country)[`Country_AR`];
+        }
+    }
+    // $: console.log( findCountryName(this_country, selectedLanguage)) ;
+
 
     let country_counts = groupBy( data, 'Country');
     for (const [key, value] of Object.entries(country_counts)) {
@@ -107,6 +117,18 @@
         'Approach',
         'Agents']
 
+    function find_region( this_region , selectedLanguage){
+    // Find name of the region in AR
+        if (selectedLanguage === 'en'){
+            return info.find(d => d.Region == this_region)['Region'];
+        }else {
+            let region_data = data.filter(d => d.Region == this_region);
+            let region_ar = region_data[0][`Region_AR`];
+            return region_ar;
+        }
+    }
+    
+
 </script>
 
 <div class='panel' id="left-panel">
@@ -136,7 +158,7 @@
                 <!-- Print the Countries as Clickable -->
                 {#each Object.entries(country_counts) as [key, value]}
                     <div class="country-count" on:click={() => {country.set(key); app_state.set('country');}} on:keydown={() => {country.set(key); app_state.set('country');}}>
-                        <span class="country-name">{key}</span>
+                        <span class="country-name">{findCountryName(key, selectedLanguage)}</span>
                     </div>
                 {/each}
             </div> 
@@ -144,12 +166,18 @@
         {:else}
             <!-- One Level in: TURKEY , ISREAL, ETC -->
             {#if state == 'country'}
-                <p class="back-button" on:click={goBack} on:keydown={goBack}>Back to World</p>
-                {#if filtered_data}
-                    <p class="country-title">{this_country}</p>
-                    <p class="country-info"> There are {filtered_data.length} {this_source}ization events</p>
-                    <p class="country-info"> {filtered_info['Info']}</p>
-                {/if}
+                <div style={aligntext(selectedLanguage)} >
+                    <p class="back-button" on:click={goBack} on:keydown={goBack}>Back to World</p>
+                    {#if filtered_data}
+                        <p class="country-title">{findCountryName(this_country, selectedLanguage)}</p>
+                        {#if selectedLanguage == 'en'}
+                            <p class="country-info"> There are {filtered_data.length} {this_source}ization events</p>
+                        {:else}
+                            <p class="country-info"> هناك {filtered_data.length} حدثا للتطرف</p>
+                        {/if}
+                        <p class="country-info"> {filtered_info[`Info${lang}`]}</p>
+                    {/if}
+                </div>
             {/if}
             <!-- Data Defined Regions, Istanbul, Northern Silesia etc, lat lon is the avgof all points -->
             {#if state == 'region'}
@@ -158,8 +186,10 @@
                     <span class="back-button" style="text-decoration:none">&gt;</span>
                     <span class="back-button" on:click={gotoCountry} on:keydown={goBack}>{this_country}</span>
                 </div>
-
-                <h3 class="info-content">{this_region}</h3>
+                
+                <div style={aligntext(selectedLanguage)} >
+                    <h3 class="info-content">{find_region( this_region , selectedLanguage)}</h3>
+                </div>
 
                 {#if active_id != ''}
                     <!-- COMMON COLUMNS -->
@@ -235,8 +265,10 @@
                         {/if}
                     {/if}
                 {:else}
-                    {#if region_data['Region Info']}
-                        <p><span class="event-info">{region_data['Region Info']}</span></p>
+                    {#if region_data[`Region Info${lang}`]}
+                        <div style={aligntext(selectedLanguage)} >
+                            <p><span class="event-info">{region_data[`Region Info${lang}`]}</span></p>
+                        </div>
                     {/if}
                 {/if}
             {/if}
