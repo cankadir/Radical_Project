@@ -76,8 +76,6 @@
             return info.find(d => d.Country == country)[`Country_AR`];
         }
     }
-    // $: console.log( findCountryName(this_country, selectedLanguage)) ;
-
 
     let country_counts = groupBy( data, 'Country');
     for (const [key, value] of Object.entries(country_counts)) {
@@ -120,7 +118,9 @@
     function find_region( this_region , selectedLanguage){
     // Find name of the region in AR
         if (selectedLanguage === 'en'){
-            return info.find(d => d.Region == this_region)['Region'];
+            let region_data = data.filter(d => d.Region == this_region);
+            let region_ar = region_data[0][`Region`];
+            return region_ar;
         }else {
             let region_data = data.filter(d => d.Region == this_region);
             let region_ar = region_data[0][`Region_AR`];
