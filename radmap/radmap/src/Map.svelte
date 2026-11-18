@@ -5,13 +5,25 @@
 
     import { onMount } from 'svelte';
     import L from 'leaflet';
-    import {LMap} from './store.js'
+    import {LMap, language} from './store.js'
 
     let map = L.map( L.DomUtil.create("div") , { 
         center:[0,0],
         zoom:5,
         zoomSnap: 0.25,
     });
+
+    // Get langugage from store
+    let selectedLanguage;
+    language.subscribe(value => {
+        selectedLanguage = value;
+    });
+
+    // create a reactive new variable that is "" if the language is english and "ar" if the language is arabic
+    let lang = '';
+    $: lang = selectedLanguage === 'en' ? '' : '_AR';
+    $: console.log("This is OK" , lang);
+
     
     // Separate labels and tiles to have labels above polygons
     map.createPane('labels');

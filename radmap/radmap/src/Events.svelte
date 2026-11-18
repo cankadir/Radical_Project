@@ -3,7 +3,7 @@
     // Tooltips + click functions on circle markers 
     // Only points in the selected region are shown, data is filtred by Source and Region.
 
-    import {LMap, source, country, region, app_state, active_event} from './store.js';
+    import {LMap, source, country, region, app_state, active_event, language} from './store.js';
     export let points;
     import L from 'leaflet';
 
@@ -31,6 +31,17 @@
         state = value;
     });
 
+    // Get langugage from store
+    let selectedLanguage;
+    language.subscribe(value => {
+        selectedLanguage = value;
+    });
+
+    // create a reactive new variable that is "" if the language is english and "ar" if the language is arabic
+    let lang = '';
+    $: lang = selectedLanguage === 'en' ? '' : '_AR';
+    console.log(lang , ' : is changed');
+
     let map = $LMap;
     
     function reset_event_Markers(){
@@ -50,20 +61,21 @@
         let region_markers =  []
         filtered_data.forEach(function(d){
 
-            let popup;
-            if (d['source'] == 'radical'){
-                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Event Type']}</p><br><p>${d['address']}</p></div>`;
-            } else {
-                popup = `<div class="popup-container"><b>${d['Program Name']}</b><br><p>${d['address']}</p></div>`;
-            }
-            
+            let popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d[`Event Type${lang}`]}</p><br><p>${d['address']}</p></div>`
             let class_names;
+
+            // For derad data
+            if( d['source'] == 'deradical'){
+                popup = `<div class="popup-container"><b>${d['Program Name']}</b><br><p>${this_region}</p><br><p>${d['address']}</p></div>`
+            }
+
+            // for derad and 83-93 additions
             if( d['source_2'] == '83' ){
                 class_names = ['event-icon', 'event', this_source, 'add-83']
-                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Program Name']}</p><br><p>${d['address']}</p></div>`
+                popup = `<div class="popup-container"><b>${d['Program Name']}</b><br><p>${this_region}</p><br><p>${d['address']}</p></div>`
             }else if( d['source_2'] == '93' ){
                 class_names = ['event-icon', 'event', this_source, 'add-93']
-                popup = `<div class="popup-container"><b>${this_region}</b><br><p>${d['Program Name']}</p><br><p>${d['address']}</p></div>`
+                popup = `<div class="popup-container"><b>${d['Program Name']}</b><br><p>${this_region}</p><br><p>${d['address']}</p></div>`
             } else{
                 class_names = ['event-icon', 'event', this_source]
             }

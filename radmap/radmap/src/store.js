@@ -11,3 +11,6 @@ export const region = writable('');
 export const source = writable('radical');
 
 export const active_event = writable('');
+
+
+export const language = writable('');
